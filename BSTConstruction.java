@@ -1,4 +1,5 @@
 import java.util.*;
+//iterative solution
 
 public class BSTConstruction {
   static class BST {
@@ -11,67 +12,57 @@ public class BSTConstruction {
     }
 
     public BST insert(int value) {
-			
-			if(this = null)
+			BST currentNode = this;
+			while(true)
 			{
-				return this; 
+				if(value < currentNode.value)
+				{
+					if(currentNode.left == null)
+					{
+						BST newBST = new BST(value);
+						currentNode.left = newBST; 
+						break;
+					}	
+					else{
+						currentNode = currentNode.left;
+					}
+				}
+				else if(value >= currentNode.value)
+				{
+					if(currentNode.right == null)
+					{
+						BST newNode = new BST(value);
+						currentNode.right = newNode;
+						break;
+					}
+					else 
+					{
+						currentNode = currentNode.right;
+					}
+				}
 			}
-			if(this.value > value)
-			{
-				if(this.left == null)
-				{
-					BST newBST = new BST(value);
-					this.left = newBST; 
-				}
-				else
-				{
-					this.left.insert(value);
-				}
-			}
-			else if(this.value <= value)
-			{
-				if(this.right == null)
-				{
-					BST newBST = new BST(value);
-					this.right = newBST;
-				}
-				{
-					this.right.insert(value);
-				}
-				
-			}
-			
       return this;
     }
 
     public boolean contains(int value) {
-      
-			if(this.value == value)
-			{
-				return true; 
-			}
+			BST currentNode = this;
 			
-			else
+			while(currentNode != null)
 			{
-				if(this.value > value)
+				if(value < currentNode.value)
 				{
-					if(this.left == null)
-					{
-						return false;
-					}
-					this.left.contains(value);
+					currentNode = currentNode.left;
 				}
-				else if(this.value < value)
+				else if(value > currentNode.value)
 				{
-					if(this.right == null)
-					{
-						return false;
-					}
-					this.right.contains(value);
+					currentNode = currentNode.right;
+				}
+				else
+				{
+					return true;
 				}
 			}
-			
-      return false;
+			return false;
     }
 
     public BST remove(int value) {
